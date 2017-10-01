@@ -1,0 +1,52 @@
+<html>
+  <head>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+		    ['Day', 'Top', 'Middle', 'Buttom'],
+        // {% for path in path_list %}  '{{ path }}', {% endfor %}
+          {% for i in path_time %}
+            {{ i }},
+          {% endfor %}
+        ]);
+
+        var options = {
+          // title: 'Travel Time Evolution: Game {{ exp_id }}',\
+          // titlePosition: 'in',
+          backgroundColor: '#E8E5D5',
+          titleTextStyle: {color: 'black', fontName: '', fontSize: 30, },
+          hAxis: {
+            title: 'Day',
+            titleTextStyle: {color: 'red', fontSize: 30, italic: 'False', },
+          },
+          vAxis: {
+            title: 'Travel Time', 
+            titleTextStyle: {color: 'red', fontSize: 30, italic: 'False',},
+          },
+          fontSize: 20,
+          fontName: '',
+          series: {0:{color: '#00AEEF'}, 1:{color: '#F7941E'}, 2:{color: '#00A651'}},
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <style type="text/css">
+    body{ margin-top:5%; margin-left: 0%; margin-right: 0%; width:100%; background-color: #E8E5D5}
+    #title{font-family: times, Times New Roman, times-roman, georgia, serif; font-size: 40px; line-height: 14px; letter-spacing: 2px; font-weight: bold; width: 100%; text-align: center;}    
+  </style>
+
+  <body>
+    <div id='title'> Game <font color='red'>{{ exp_id }}</font></div><br />
+    <div id="chart_div" style="width: 80%; margin:0 auto; height: 80%;"></div>
+
+    <!-- <div style='text-align:right; width: 1200px'> Powered by <a href="http://google-developers.appspot.com/chart/"> Google Charts </a></div> -->
+  </body>
+</html>

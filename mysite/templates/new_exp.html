@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>create new experiment</title>
+  <style type="text/css">
+    /*body{margin-top: 2cm; margin-left: 10%; width:90%; background-color: #E8E5D5; }*/
+    body{width: 100%; height: 100%; background-color: #E8E5D5; margin: 0px}
+    .small_headline{font-family: 'Julius Sans One', sans-serif; font-size: 40px; line-height: 14px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;}
+    .large_headline{font-family: times, Times New Roman, times-roman, georgia, serif; color: #000000; margin: 0; padding: 0px 0px 6px 0px; font-size: 51px; line-height: 44px; letter-spacing: -2px; font-weight: bold; background-color:}
+    .mainbody{font-family: Geogia, Times New Roman, Times, serif; font-stype: normal; font-size: 20; font-weight: 400; line-height:150%;; margin: 0; padding: 0px 0px 6px 0px; letter-spacing: 0px; color: black;}
+    .blur { 
+      filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+      -webkit-filter: blur(10px); /* Chrome, Opera */
+       -moz-filter: blur(10px);
+        -ms-filter: blur(10px);    
+            filter: blur(10px);
+      filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+    }
+    input.agree{float: left; text-align: center; padding: 2px; margin: 2px; font-family: Geogia, Times New Roman, Times, serif; font-stype: normal; font-size: 18; font-weight: 400; line-height:150%; letter-spacing: 0px; color: black;}
+    #layer1{box-shadow: inset 0px 0px 10px rgba(1, 1, 1, 0.4); float: left; width:100%; height:70%;  background-image: url('/static/images/background_new.png'); background-size: 60%; background-repeat: repeat; background-position: center; }
+    #new_exp{background-color: rgba(85,85,85, 0.3); position: absolute;  top: 20%; left: 10%; border: 0px double #06F867; text-align: center; padding: 20px; margin: 20px; }
+    #layer2{float: left; margin-left:0.5cm; margin-top: 0.5cm; width:100%; height: auto;}
+    #terms_and_conditions{float:left; width:70%; height: auto}
+    #click_button{float:right; width:30%; height: auto;}
+    #bottom{float:bottom; width:100%;}
+    a{ text-decoration:none} 
+    /*;*/
+    /**/
+</style>
+</head>
+
+<!-- <body style="font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-size: medium; font-style: normal; font-weight: 200;"> -->
+<body>
+<div id='layer1';>
+    <div id='new_exp'; class='small_headline';> NEW EXPERIMENT </div>
+</div>
+
+<div id='layer2'; class='mainbody';>
+  <div id='terms_and_conditions'; class="mainbody";>
+    To start a new experiment, you have to agree the following statements:
+    <ul>
+      <li>The website is for teaching and research uses only. For commericial usage, please contact the developer. </li>
+      <li>The developer is not responsible for any potential damage to the users.</li>
+      <li>All information during the experiment will be collected for research and other purposes.</li>
+    </ul>
+  </div>
+  <div id='click_button';>
+    <form action="" method="post"> 
+
+         <!-- <input class='admin_submit' type="submit" value="CLICK TO START" class='submit', name="start_exp"> -->
+<!--         <p>
+          Exact or approximate number of players:<br />
+          <input type="number" name='user_num' min='1'>
+        </p><br />
+        <p>
+          Time length of each day:<br />
+          <input type="number" name='time_interval' min='1'> seconds
+        </p><br /> -->
+        {% for i in form.message %}
+          <p> {{ i }} </p>
+        {% endfor %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <p><input class='agree' type="submit" value="Agree" , name="yes_agree"> <input class='agree' type="submit" value="Not Agree" , name="no_exit"></p>
+        <!-- <input type="submit" value="Not Agree"> -->
+    </form>
+  </div>
+</div>
+<div id='statement'>
+  <hr noshade><p align="right"><font size='3'>Powered by <a href="http://www.djangoproject.com/">Django</a>. <a href="http://www.freepik.com/free-photos-vectors/banner">Banner vector</a> & <a href="http://www.freepik.com/free-photos-vectors/icon">Icon vector</a> designed by <a href="http://www.freepik.com/">Freepik.</a></font></p>
+</div>
+</body>
+</html>

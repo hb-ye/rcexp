@@ -1,0 +1,232 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- {% if user_id == 'Admin' or auto_refresh %}
+  <meta http-equiv="refresh" content="3">
+{% endif %} -->
+<title></title>
+<script language="javascript">
+var max_time = {{ time_interval }};
+var cinterval;
+ 
+function countdown_timer(){
+  // decrease timer
+  max_time--;
+  document.getElementById('countdown').innerHTML = max_time;
+  if(max_time == 0){
+    clearInterval(cinterval);
+  }
+}
+// 1,000 means 1 second.
+cinterval = setInterval('countdown_timer()', 1000);
+</script>
+</head>
+
+{% if not is_mobile %}
+<style type="text/css">
+  body{margin-top: 0; margin-bottom:0%; margin-left: 0%; margin-right: 0%; width:100%; height:100%; background-color: #E8E5D5;}
+  .small_headline{font-family: "Gill Sans", Verdana; font-size: 30px; line-height: 14px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;}
+  .large_headline{font-family: times, Times New Roman, times-roman, georgia, serif; color: #000000; margin: 0; padding: 0px 0px 6px 0px; font-size: 35px; line-height: 44px; letter-spacing: 0px; font-weight: bold; background-color:}
+  .mainbody, input.admin_submit, input.user_submit{font-family: Geogia, Times New Roman, Times, serif; font-stype: normal; font-size: 20; font-weight: 400; line-height:150%; letter-spacing: 0px; color: black;}
+  .block{float: left; background-color: rgba(85,85,85, 0.3); border: 0px double #06F867; text-align: center; padding: 10px; margin: 10px;}
+  .admin_submit, .user_submit{float: right; background-color: rgba(85,85,85, 0.3); border: 0px double #06F867; text-align: center; padding: 20px; margin: 20px;}
+  .user_submit{float:left;}
+  input.refresh{float: left; text-align: center; padding: 2px; margin: 2px; font-family: Geogia, Times New Roman, Times, serif; font-stype: normal; font-size: 18; font-weight: 400; line-height:150%; letter-spacing: 0px; color: black;}
+  .admin_submit:hover, .user_submit:hover, .refresh:hover{ background-color: #add8e6; box-shadow: 2px 2px 1px #8aacb8}
+  ul{list-style-type:none;}
+  /*input.admin_submit{font-family: Geogia, Times New Roman, Times, serif; font-stype: normal; font-size: 20; font-weight: 400; line-height:150%; letter-spacing: 0px; color: black;}*/
+  #header{float:left; width:100%; height:auto; background-color: #BBB384;}
+  #main{float: left; margin-left: 10%; width:90%; height:auto;}
+  #statement{float: left; width:100%; height:auto;}
+  /*#game_info_layer{ float:left; width:25%; text-align: right}*/
+  /*#basic_info{float: right; width:100%; }*/
+  #user_logon_layer{float: right; width:20%;}
+  /*#network_info_layer{float:left; width:50%; text-align: center;}*/
+  #main_left{float: left; width:70%;} 
+  #main_right{margin-top: 1cm; float:left; width:30%;}
+  #travel_time_block{float: left; text-align: center; width:100%;}
+  #travel_time_table{border-style:solid; text-align: center; font-weight: bold; font-size: 25;}
+  /*#route_choice_layer{ width:250px; height:150px;}*/
+  #route_choice{ float: left; width: 550px; height: 100px;}
+  /*.choice_item{ float: left; width:100%;}*/
+
+  input[type='radio'] {
+    /*border: 1px;*/
+    width: 1.5em;
+    height: 1.5em;
+    /*margin: 20px, 100, 100, 20px;*/
+    /*top:2px;*/
+    /*line-height: 1.5em;*/
+    background: no-repeat;
+    display: block;
+    clear: left;
+    float: left;
+    cursor: pointer;
+  }
+
+</style>
+{% endif %}
+
+<body>
+<div id='header'; class='mainbody';>
+  <div class='block';>
+    {% if user_id == 'Admin' %}
+      <p>WELCOME, <a class='large_headline';>MASTER</a></p>
+    {% else %}
+      <p>WELCOME, PLAYER <a class='large_headline';>{{ user_id }}</a></p>
+    {% endif %}
+  </div>
+  <div class='block';>
+    <p>GAME  <a class='large_headline';>{{ exp_id }}</a></p>
+  </div>
+  <div class='block';>
+    <p>DAY  <a class='large_headline' style='color: red';>{{ exp_day }}</a></p>
+  </div>
+
+
+
+  {% if user_id == 'Admin'  %}
+      {% if not exp_start %}
+        <div class='block';>
+          <p>Current Login: <a class='large_headline';> <font color="red">{{ user_num }}</font></a></p>
+        </div>
+      {% else %}
+        <div class='block';>
+          <p>Current Submission: <a class='large_headline';><font color="red">{{ user_num }}</font></a></p>
+        </div>
+        <div class='block'>
+          <p>Time left: <a class='large_headline';><font color="red"><span id="countdown"> {{ time_interval }} </span></font></a> seconds.</p>
+        </div>
+      {% endif %}
+    <form action="" method="post"> 
+      {% if not exp_start %}
+        <input class='admin_submit' type="submit" value="CLICK TO START GAME" class='submit', name="start_exp">
+      {% else %}
+        <input class='admin_submit' type="submit" value="GAME FINISH" style='background:black; color:white;', name="exit_exp">
+        <input class='admin_submit' type="submit" value="TO NEXT DAY", name="next_step">
+      {% endif %}
+    </form>
+  {% endif %}
+</div>
+
+<div id='main'; class='mainbody'>
+  <div id='main_left';>
+    {% if not is_mobile %}
+      <div id="network_structure";>
+          <!-- <p><strong>Network structure</strong></p> -->
+          <img src="/static/images/Braess_5_link.png" width=60%>
+      </div>
+    {% endif %}
+  </div>
+  <div id='main_right';>
+    <div id='info_update', class='mainbody'>
+      <input class='refresh' type=button value="Update" onclick="location=location">&nbsp;&nbsp;<a> Click to obtain current status.</a>
+       <br /><br />
+      <!-- <input type=button value=刷新 onclick="location.assign(location)">  -->
+      <!-- <input type=button value=刷新 onclick="document.execCommand('Refresh')">  -->
+      <!-- <input type=button value=刷新 onclick="window.navigate(location)">  -->
+      <!-- <input type=button value=刷新 onclick="location.replace(location)">  -->
+      <!-- <input type=button value=刷新 onclick="window.open('自身的文件','_self')">  -->
+      <!-- <input type=button value=刷新 onClick=document.all.WebBrowser.ExecWB(22,1)>  -->
+      <!-- <OBJECT classid=CLSID:8856F961-340A-11D0-A96B-00C04FD705A2 height=0 id=WebBrowser width=0></OBJECT>  -->
+      <!-- <form action="自身的文件"> 
+      <input type=submit value=刷新> 
+      </form>  -->
+      <!-- <a id=a1 href="自身的文件"></a>  -->
+      <!-- <input type=button value=刷新 onclick="a1.click()">  -->
+    </div>
+
+    <div id='travel_time_block'>
+      <!-- <fieldset> -->
+        <!-- <legend style='text-align: left'>Travel Time</legend> -->
+          <table id='travel_time_table' class='mainbody' cellspacing="15px"> <!-- width="250" -->
+            <tbody>
+    <!--           <tr>
+                <td style="font-size: x-large" align="center">OD</td>
+                <td style="font-size: x-large" align="center">Route</td>
+                <td style="font-size: x-large" align="center">Time</td>
+              </tr> -->
+              <!-- {% for path_id, path_time in path_time_dict.items %} -->
+                <!-- <tr> -->
+                  <!-- <td style="font-size: x-large" align="center">  1  </td> -->
+                  <!-- <td style="font-size: x-large" align="center">  {{ path_id }}  </td> -->
+                  <!-- <td style="font-size: x-large" align="center">  {{ path_time|floatformat:2 }}  </td> -->
+                <!-- </tr> -->
+              <!-- {% endfor %} -->
+              {% for path_id, path_time in path_time_dict.items %}
+                <tr>
+                  {% if path_id == 1 %}
+                    <td> <font color='#0000FF';> Top </font> </td>
+                    <td> <font color='#0000FF';> {{ path_time|floatformat:0 }}min </font></td>
+                  {% elif path_id == 2 %}
+                    <td> <font color='#F7941E';> Middle </font></td>
+                    <td> <font color='#F7941E';> {{ path_time|floatformat:0 }}min </font></td>
+                  {% else %}
+                    <td><font color='#00A651';> Bottom </font></td>
+                    <td><font color='#00A651';> {{ path_time|floatformat:0 }}min </font></td>
+                  {% endif %}    
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        <!-- </fieldset> -->
+      <br />
+    </div>
+
+    {% if user_id == 'Admin'  %}
+      <div id="address_user_login">
+        <p>JOIN NOW!</p>
+        <p> <a href="{{ exp_addr }}"> {{ exp_addr}} </a></p>
+        <br>
+        <img src="http://chart.apis.google.com/chart?cht=qr&chl={{ exp_addr }}&chs=200x200" alt="Route Choice Game: User Log in">
+        <!-- <img src="http://qr.liantu.com/api.php?&bg=E8E5D5&fg=cc0000&m=0&w=250&text={{ exp_addr }}" alt="Route Choice Game: User Log in"> -->
+        <br /><br />
+      </div>
+    {% else %}
+      <div class='mainbody'>
+        {% if error_list %} 
+          {% for i in error_list %} 
+            <li><h2><font color="red">{{ i }}</font></h2></li>
+          {% endfor %}
+        {% else %}
+          {% if auto_refresh %}
+            <li><h2><font color="red"> You have submitted, please wait </font></h2></li>
+          {% else %}
+            <li><h2><font color="red"> Please choose a route and submit </font></h2></li>
+          {% endif %}
+        {% endif %}
+        <!-- <fieldset> -->
+          <!-- <legend>Route Choice</legend> -->
+            <form action="" method="post"> 
+              <table>
+              <!--           {% for radio in form.route_choice %}
+                    <div class="radio"> {{ radio }} </div>
+                  {% endfor %} -->
+                <!-- {{ form.as_p }} -->
+                {% for field in form %}
+                  <div class='choice_item' style='font-size: 22; line-height: 200%; text-indent: 10px;'> {{ field }}</div>
+                {% endfor %}
+              </table>
+                <!-- <input type="hidden" name="exp_id" value='{{ exp_id }}'> -->
+                <!-- <input type="hidden" name="user_id" value='{{ user_id }}'> -->
+              <input type="submit" value="SUBMIT" class='user_submit'>
+            </form>
+        <!-- </fieldset> -->
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+<!-- <div id='statement';>
+  <hr noshade><p align="right" style='margin-right: 2cm'><font size='4'><a href="http://www.freepik.com/free-photos-vectors/banner">Banner vector</a> & <a href="http://www.freepik.com/free-photos-vectors/icon">Icon vector</a> designed by <a href="http://www.freepik.com/">Freepik.</a></font></p>
+</div> -->
+
+
+  <!--   <div id="submit"> -->
+  <!-- <label> <input type="submit" name="submit" id="submit" value="Submit"> </label></div></div>  -->
+  <!-- -->
+</body>
+
+</html>
