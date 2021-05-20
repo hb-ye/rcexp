@@ -1,6 +1,6 @@
 django>=1.8,<1.9
 django-debug-toolbar==1.5
-gunicorn==19.4.5
+gunicorn==19.5.0
 psycopg2==2.6.1
 whitenoise==3.0
 numpy==1.9.1
